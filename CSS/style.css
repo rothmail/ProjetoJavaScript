@@ -1,0 +1,50 @@
+/* SAPPHIRE = #3C507D
+ROYAL BLUE = #112250
+QUICKSAND = #EDC58F
+SWAN WING = #F5F0E9
+SHELLSTONE = #D9CB2 */
+
+/*forçando o tamanho correto da tela*/
+* {
+    padding: 0;
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    color: #0b245f;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background-color: #F5F0E9;
+}
+
+header {
+    background-color: #EDC58F;
+    margin-bottom: 10px;
+}
+
+main {
+    background-color: #D9CBC2;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+section {
+    width: 100%;
+    max-width: 200px;
+}
+
+footer {
+    background-color: #EDC58F;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}

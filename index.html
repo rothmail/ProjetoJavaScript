@@ -10,22 +10,58 @@
 
 <body>
     <header>
-        <h1>Projeto JavaScript</h1>
+        <h1>Lista de Compras</h1>
     </header>
 
-    <main>
-        <section>
-            <!--Formulário para PROJETOS-->
+    <main class="container">
+        <section id="sct-project">
+            <h2>Adicionar Projeto</h2>
+            <form id="formProjeto">
+                <input type="text" id="nomeProjeto" placeholder="Adicionar projeto..." required>
+                <button type="submit">Adicionar Projeto</button>
+            </form>
         </section>
-        <section>
-            <!--Formulário para TAREFAS-->
-            <!--Vontade zero de fazer issoa aqui :(-->
+        <section id="sct-itens">
+            <h2>Adicionar Tarefas</h2>
+            <input type="text" id="itemInput" placeholder="Adicionar tarefa..." />
 
-            <!--descrição, responsável, rescurço, status, cor-->
+            <button id="btnAdd">Adicionar</button>
+            <button id="btnRemove">Remover último</button>
+            <button id="btnMostrar">Mostrar lista</button>
+            <button id="btnMudarCor">Mudar Cor de Fundo</button>
         </section>
 
-        <!--Botões REMOVER e EDITAR-->
-    </main><!--Vontade zero de fazer isso aqui :(-->
+        <section id="sct-description">
+            <input type="text" id="descricao" placeholder="Descrição" required><br>
+        </section>
+
+        <section id="sct-owner">
+            <input type="text" id="responsavel" placeholder="Responsável" required><br>
+        </section>
+
+        <section id="sct-tipo">
+            <input type="text" id="Tipo" placeholder="Tipo de recursos" required><br>
+        </section>
+
+        <section id="sct-status">
+            <select id="status" required>
+                <option value="planejando">Status</option>
+                <option value="pendente">Pendente</option>
+                <option value="em andamento">Em andamento</option>
+                <option value="concluída">Concluída</option>
+        </section>
+
+        <section id="sct-list">
+            <ul id="listItens"></ul>
+        </section>
+
+        <section>
+            <label>Cor: <input type="color" id="cor" required></label><br><br>
+    </main>
+
+    <footer>
+        <p>&copy; Site feito por Amanda Rothmann, Eduardo Bassani e Lorenzo Krentz. Alunos do Senac Unisinos.</p>
+    </footer>
 
     <script src="./JS/script.js"></script>
 </body>
