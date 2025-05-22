@@ -1,69 +1,36 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestão de Projetos</title>
+    <link rel="stylesheet" href="./CSS/style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Gestão de Projetos</h1>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projeto | JavaScript</title>
-    <link rel="stylesheet" href="./CSS/style.css">
-</head>
+      <form id="form-projeto">
+        <input type="text" id="nome-projeto" placeholder="Nome do Projeto"/>
+        <button type="submit">Adicionar Projeto</button>
+      </form>
 
-<body>
-    <header>
-        <h1>Lista de Compras</h1>
-    </header>
+      <form id="form-tarefa">
+        <input type="text" id="descricao" placeholder="Descrição"/>
+        <input type="text" id="responsavel" placeholder="Responsável"/>
+        <input type="text" id="tipo" placeholder="Tipo de Recurso"/>
+        <select id="status" required>
+          <option value="pendente">Pendente</option>
+          <option value="em progresso">Em Progresso</option>
+          <option value="concluida">Concluída</option>
+        </select>
+        <input type="color" id="cor" value="#ba68c8" />
+        <button type="submit">Adicionar Tarefa</button>
+      </form>
 
-    <main class="container">
-        <section id="sct-project">
-            <h2>Adicionar Projeto</h2>
-            <form id="formProjeto">
-                <input type="text" id="nomeProjeto" placeholder="Adicionar projeto..." required>
-                <button type="submit">Adicionar Projeto</button>
-            </form>
-        </section>
-        <section id="sct-itens">
-            <h2>Adicionar Tarefas</h2>
-            <input type="text" id="itemInput" placeholder="Adicionar tarefa..." />
-
-            <button id="btnAdd">Adicionar</button>
-            <button id="btnRemove">Remover último</button>
-            <button id="btnMostrar">Mostrar lista</button>
-            <button id="btnMudarCor">Mudar Cor de Fundo</button>
-        </section>
-
-        <section id="sct-description">
-            <input type="text" id="descricao" placeholder="Descrição" required><br>
-        </section>
-
-        <section id="sct-owner">
-            <input type="text" id="responsavel" placeholder="Responsável" required><br>
-        </section>
-
-        <section id="sct-tipo">
-            <input type="text" id="Tipo" placeholder="Tipo de recursos" required><br>
-        </section>
-
-        <section id="sct-status">
-            <select id="status" required>
-                <option value="planejando">Status</option>
-                <option value="pendente">Pendente</option>
-                <option value="em andamento">Em andamento</option>
-                <option value="concluída">Concluída</option>
-        </section>
-
-        <section id="sct-list">
-            <ul id="listItens"></ul>
-        </section>
-
-        <section>
-            <label>Cor: <input type="color" id="cor" required></label><br><br>
+      <div id="lista-projetos"></div>
     </main>
 
-    <footer>
-        <p>&copy; Site feito por Amanda Rothmann, Eduardo Bassani e Lorenzo Krentz. Alunos do Senac Unisinos.</p>
-    </footer>
-
     <script src="./JS/script.js"></script>
-</body>
-
+  </body>
 </html>
