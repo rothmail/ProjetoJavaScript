@@ -1,6 +1,7 @@
 const formProjeto = document.getElementById('form-projeto');
 const formTarefa = document.getElementById('form-tarefa');
 const listaProjetos = document.getElementById('lista-projetos');
+const mensagem = document.getElementById('mensagem');
 
 let projetos = [];
 
@@ -21,7 +22,9 @@ formTarefa.addEventListener('submit', e => {
     const status = document.getElementById('status').value;
     const cor = document.getElementById('cor').value;
 
-    if (!descricao || !responsavel || !tipo || !cor || projetos.length === 0) return;
+    if (!descricao || !responsavel || !tipo || !cor || projetos.length === 0){
+        return mensagem.innerHTML = `Todos os campos são obrigatorios!`
+    }
 
     const tarefa = { descricao, responsavel, tipo, status, cor };
     projetos[projetos.length - 1].tarefas.push(tarefa);
@@ -66,6 +69,11 @@ function atualizarStatus(i, j, novoStatus) {
 
 function removerTarefa(i, j) {
     projetos[i].tarefas.splice(j, 1);
+    renderizarProjetos();
+}
+
+function removerProjeto(i) {
+    projetos.splice(i);
     renderizarProjetos();
 }
 
