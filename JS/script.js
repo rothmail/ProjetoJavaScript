@@ -1,89 +1,144 @@
-const formProjeto = document.getElementById('form-projeto');
-const formTarefa = document.getElementById('form-tarefa');
-const listaProjetos = document.getElementById('lista-projetos');
-const mensagem = document.getElementById('mensagem');
+let projects = [];
 
-let projetos = [];
+// Função para adicionar um projeto
+function addProject(name) {
+    const project = { name: name, tasks: [] };
+    projects.push(project);
+    renderProjects();
+    updateProjectSelect();
+}
 
-formProjeto.addEventListener('submit', e => {
-    e.preventDefault();
-    const nome = document.getElementById('nome-projeto').value.trim();
-    if (!nome) return;
-    projetos.push({ nome, tarefas: [] });
-    formProjeto.reset();
-    renderizarProjetos();
-});
+// Função para adicionar uma tarefa
+function addTask(projectIndex, task) {
+    projects[projectIndex].tasks.push(task);
+    renderProjects();
+}
 
-formTarefa.addEventListener('submit', e => {
-    e.preventDefault();
-    const descricao = document.getElementById('descricao').value.trim();
-    const responsavel = document.getElementById('responsavel').value.trim();
-    const tipo = document.getElementById('tipo').value.trim();
-    const status = document.getElementById('status').value;
-    const cor = document.getElementById('cor').value;
+// Função para remover um projeto
+function removeProject(index) {
+    projects.splice(index, 1);
+    renderProjects();
+    updateProjectSelect();
+}
 
-    if (!descricao || !responsavel || !tipo || !cor || projetos.length === 0){
-        return mensagem.innerHTML = `Todos os campos são obrigatorios!`
-    }
+// Função para remover uma tarefa
+function removeTask(projectIndex, taskIndex) {
+    projects[projectIndex].tasks.splice(taskIndex, 1);
+    renderProjects();
+}
 
-    const tarefa = { descricao, responsavel, tipo, status, cor };
-    projetos[projetos.length - 1].tarefas.push(tarefa);
-    formTarefa.reset();
-    renderizarProjetos();
-});
+// Função para editar uma tarefa
+function editTask(projectIndex, taskIndex, updatedTask) {
+    projects[projectIndex].tasks[taskIndex] = updatedTask;
+    renderProjects();
+}
 
-function renderizarProjetos() {
-    listaProjetos.innerHTML = '';
-    projetos.forEach((proj, i) => {
-        const divProjeto = document.createElement('div');
-        divProjeto.classList.add('projeto');
-        const titulo = document.createElement('h3');
-        titulo.textContent = proj.nome;
-        divProjeto.appendChild(titulo);
+// Função para renderizar projetos e suas tarefas
+function renderProjects() {
+    const container = document.getElementById('projectsContainer');
+    container.innerHTML = ''; // Limpa o conteúdo anterior
 
-        proj.tarefas.forEach((tarefa, j) => {
-            const divTarefa = document.createElement('div');
-            divTarefa.classList.add('tarefa');
-            divTarefa.style.borderLeftColor = tarefa.cor;
-            divTarefa.innerHTML = `
-        <strong>${tarefa.descricao}</strong><br>
-        Responsável: ${tarefa.responsavel} | Tipo: ${tarefa.tipo} | Status: 
-        <select onchange="atualizarStatus(${i}, ${j}, this.value)">
-          <option ${tarefa.status === 'pendente' ? 'selected' : ''}>pendente</option>
-          <option ${tarefa.status === 'em-andamento' ? 'selected' : ''}>em-andamento</option>
-          <option ${tarefa.status === 'concluida' ? 'selected' : ''}>concluida</option>
-        </select>
-        <button onclick="editarTarefa(${i}, ${j})">Editar</button>
-        <button onclick="removerTarefa(${i}, ${j})">Remover</button>
-      `;
-            divProjeto.appendChild(divTarefa);
+    projects.forEach((project, pIndex) => {
+        const projectDiv = document.createElement('div');
+        projectDiv.classList.add('project-card');
+        projectDiv.innerHTML = `<h3>${project.name}</h3>`;
+
+        // Botão para remover o projeto
+        const removeProjectBtn = document.createElement('button');
+        removeProjectBtn.classList.add('btn-remove-project');
+        removeProjectBtn.textContent = 'Remover Projeto';
+        removeProjectBtn.onclick = () => removeProject(pIndex);
+        projectDiv.appendChild(removeProjectBtn);
+
+        // Renderiza as tarefas do projeto
+        project.tasks.forEach((task, tIndex) => {
+            const taskCard = document.createElement('div');
+            taskCard.classList.add('task-card');
+            taskCard.style.borderLeft = `6px solid ${task.color}`;
+            taskCard.innerHTML = `
+                <p><strong>Descrição:</strong> ${task.description}</p>
+                <p><strong>Responsável:</strong> ${task.responsible}</p>
+                <p><strong>Tipo:</strong> ${task.type}</p>
+                <p><strong>Status:</strong> ${task.status}</p>
+                <p><strong>Cor:</strong> <span style="background-color: ${task.color}; width: 20px; height: 20px; display: inline-block;"></span></p>
+            `;
+
+            // Botão para remover a tarefa
+            const removeTaskBtn = document.createElement('button');
+            removeTaskBtn.classList.add('btn-remove-task');
+            removeTaskBtn.textContent = 'Remover Tarefa';
+            removeTaskBtn.onclick = () => removeTask(pIndex, tIndex);
+            taskCard.appendChild(removeTaskBtn);
+
+            // Botão para editar a tarefa
+            const editTaskBtn = document.createElement('button');
+            editTaskBtn.classList.add('btn-edit-task');
+            editTaskBtn.textContent = 'Editar Tarefa';
+            editTaskBtn.onclick = () => {
+                const updatedTask = {
+                    description: prompt("Nova descrição:", task.description) || task.description,
+                    responsible: prompt("Novo responsável:", task.responsible) || task.responsible,
+                    type: prompt("Novo tipo:", task.type) || task.type,
+                    status: prompt("Novo status:", task.status) || task.status,
+                    color: task.color
+                };
+                editTask(pIndex, tIndex, updatedTask);
+            };
+            taskCard.appendChild(editTaskBtn);
+
+            projectDiv.appendChild(taskCard);
         });
 
-        listaProjetos.appendChild(divProjeto);
+        container.appendChild(projectDiv);
     });
 }
 
-function atualizarStatus(i, j, novoStatus) {
-    projetos[i].tarefas[j].status = novoStatus;
+// Função para atualizar o select de projetos
+function updateProjectSelect() {
+    const projectSelect = document.getElementById('taskProjectSelect');
+    projectSelect.innerHTML = '<option value="">Selecione o projeto</option>'; // Limpa opções anteriores
+    projects.forEach((project, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = project.name;
+        projectSelect.appendChild(option);
+    });
 }
 
-function removerTarefa(i, j) {
-    projetos[i].tarefas.splice(j, 1);
-    renderizarProjetos();
-}
+// Evento para o formulário de projeto
+document.getElementById('projectForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const projectName = document.getElementById('projectName').value;
+    addProject(projectName);
+    this.reset(); // Limpa o formulário
+});
 
-function removerProjeto(i) {
-    projetos.splice(i);
-    renderizarProjetos();
-}
+// Evento para o formulário de tarefa
+document.getElementById('taskForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const projectIndex = document.getElementById('taskProjectSelect').value;
+    const taskDescription = document.getElementById('taskDescription').value;
+    const taskResponsible = document.getElementById('taskResponsible').value;
+    const taskType = document.getElementById('taskType').value;
+    const taskStatus = document.getElementById('taskStatus').value;
+    const taskColor = document.getElementById('taskColor').value;
 
-function editarTarefa(i, j) {
-    const tarefa = projetos[i].tarefas[j];
-    document.getElementById('descricao').value = tarefa.descricao;
-    document.getElementById('responsavel').value = tarefa.responsavel;
-    document.getElementById('tipo').value = tarefa.tipo;
-    document.getElementById('status').value = tarefa.status;
-    document.getElementById('cor').value = tarefa.cor;
-    projetos[i].tarefas.splice(j, 1);
-    renderizarProjetos();
-}
+    if (projectIndex === "") {
+        alert("Por favor, selecione um projeto.");
+        return;
+    }
+
+    const task = {
+        description: taskDescription,
+        responsible: taskResponsible,
+        type: taskType,
+        status: taskStatus,
+        color: taskColor
+    };
+
+    addTask(projectIndex, task);
+    this.reset(); // Limpa o formulário
+});
+
+// Inicializa o sistema
+updateProjectSelect();

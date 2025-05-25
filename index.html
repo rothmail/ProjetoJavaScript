@@ -1,41 +1,54 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gestão de Projetos</title>
-  <link rel="stylesheet" href="./CSS/style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Projetos || JavaScript</title>
+    <link rel="stylesheet" href="./CSS/style.css"/>
 </head>
-
 <body>
-  <main>
-    <h1>Gestão de Projetos</h1>
+    <header>
+        <h1>Gerenciador de Projetos</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Adicionar Projeto</h2>
+            <form id="projectForm">
+                <input class="btn-ajust" type="text" id="projectName" placeholder="Nome do Projeto" required />
+                <button type="submit">Adicionar Projeto</button>
+            </form>
+        </section>
 
-    <form id="form-projeto">
-      <input type="text" id="nome-projeto" placeholder="Nome do Projeto" />
-      <button type="submit">Adicionar Projeto</button>
-    </form>
+        <section>
+            <h2>Adicionar Tarefa</h2>
+            <form id="taskForm">
+                <select id="taskProjectSelect" required>
+                    <option value="">Selecione o projeto</option>
+                </select>
+                <input class="btn-ajust" type="text" id="taskDescription" placeholder="Descrição" required />
+                <input class="btn-ajust" type="text" id="taskResponsible" placeholder="Responsável" required />
+                <input class="btn-ajust" type="text" id="taskType" placeholder="Tipo de Recurso" required/>
+                <select id="taskStatus" required>
+                    <option value="">Status</option>
+                    <option value="pendente">Pendente</option>
+                    <option value="em progresso">Em Progresso</option>
+                    <option value="concluída">Concluída</option>
+                </select>
+                <input type="color" id="taskColor" value="#d5b893"/>
+                <button type="submit">Adicionar Tarefa</button>
+            </form>
+        </section>
 
-    <form id="form-tarefa">
-      <input type="text" id="descricao" placeholder="Descrição" />
-      <input type="text" id="responsavel" placeholder="Responsável" />
-      <input type="text" id="tipo" placeholder="Tipo de Recurso" />
-      <select id="status" required>
-        <option value="pendente">Pendente</option>
-        <option value="em progresso">Em Progresso</option>
-        <option value="concluida">Concluída</option>
-      </select>
-      <input type="color" id="cor" value="#ba68c8"/>
-      <button type="submit">Adicionar Tarefa</button>
-    </form>
+        <section id="projectsContainer"></section>
+    </main>
 
-    <p id="mensagem"></p>
+    <!--footer-->
+    <footer>
+        <div>
+            <span>&copy; 2025 Amanda Rothmann, Eduardo Bassani, Lorenzo Krentz - Senac Unisinos</span>
+        </div>
+    </footer>
 
-    <div id="lista-projetos"></div>
-  </main>
-
-  <script src="./JS/script.js"></script>
+    <script src="./JS/script.js"></script>
 </body>
-
 </html>
