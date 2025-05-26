@@ -79,7 +79,7 @@ function renderProjects() {
                     description: prompt("Nova descrição:", task.description) || task.description,
                     responsible: prompt("Novo responsável:", task.responsible) || task.responsible,
                     type: prompt("Novo tipo:", task.type) || task.type,
-                    status: prompt("Novo status:", task.status) || task.status,
+                    status: prompt("Novo status:\n(pendente|em progresso|concluído)", task.status) || task.status,
                     color: task.color
                 };
                 editTask(pIndex, tIndex, updatedTask);
